@@ -1,0 +1,132 @@
+/* ===== Хоррор-слой: тьма, плёнка, лента. Цвет — только как акцент ===== */
+:root{
+  --bg:#070708; --panel:#0e0e10; --panel-2:#141416; --line:#26252a;
+  --ink:#d9d6d0; --muted:#85827d; --amber:#b9a988; --alert:#c4121f; --cyan:#8796a3;
+  --red:#c4121f; --blue:#3a5aa8;
+  --glow-r:0 0 4px rgba(196,18,31,.9),0 0 16px rgba(196,18,31,.55),0 0 38px rgba(120,0,10,.5);
+}
+html,body{overflow-x:clip}
+body{background:radial-gradient(120vw 80vh at 50% -10%,#121318,transparent 60%),radial-gradient(60vw 60vh at 0% 100%,rgba(110,0,10,.22),transparent 70%),radial-gradient(60vw 70vh at 100% 60%,rgba(30,60,150,.2),transparent 70%),#070709;background-attachment:fixed}
+/* виньетка: края экрана тонут в темноте */
+.vign{position:fixed;inset:0;pointer-events:none;z-index:43;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.55) 85%,rgba(0,0,0,.85))}
+/* редкая тревожная вспышка мигалки, не постоянная */
+.siren{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0}
+.siren::before,.siren::after{content:"";position:absolute;top:0;bottom:0;width:34vw;filter:blur(40px)}
+.siren::before{left:-14vw;background:radial-gradient(closest-side,rgba(196,18,31,.28),transparent)}
+.siren::after{right:-14vw;background:radial-gradient(closest-side,rgba(58,90,168,.22),transparent)}
+body.alarm .siren{animation:alarm 2.4s steps(1) 1}
+@keyframes alarm{0%,20%,40%{opacity:1}10%,30%,50%,100%{opacity:0}}
+main,.nav,footer{position:relative;z-index:2}
+.grain{position:fixed;inset:-50%;pointer-events:none;z-index:45;opacity:.11;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain .6s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-5%)}75%{transform:translate(-2%,-3%)}100%{transform:translate(4%,2%)}}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:44;background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.25) 2px 3px)}
+.scan::after{content:"";position:absolute;left:0;right:0;height:90px;background:linear-gradient(transparent,rgba(255,255,255,.03),transparent);animation:roll 9s linear infinite}
+@keyframes roll{from{top:-90px}to{top:100%}}
+body.glitching main{animation:shake .32s steps(2) 1}
+body.glitching .grain{opacity:.3}
+@keyframes shake{0%{transform:translate(0)}25%{transform:translate(-6px,2px);filter:grayscale(1) contrast(1.6)}50%{transform:translate(5px,-2px);filter:drop-shadow(3px 0 rgba(196,18,31,.8)) drop-shadow(-3px 0 rgba(58,90,168,.6))}75%{transform:translate(-2px,1px)}100%{transform:none;filter:none}}
+
+/* ===== шапка ===== */
+.nav{background:linear-gradient(90deg,rgba(30,4,8,.92),rgba(7,7,9,.92) 35%,rgba(7,7,9,.92) 65%,rgba(8,16,40,.92));border-bottom:1px solid transparent;border-image:linear-gradient(90deg,rgba(196,18,31,.7),transparent 40%,transparent 60%,rgba(74,125,255,.7)) 1}
+.tabs button[aria-current="page"]{color:#f1ede6}
+.tabs button::after{background:linear-gradient(90deg,var(--red),#4a7dff);box-shadow:0 0 8px var(--red),0 0 10px rgba(74,125,255,.6)}
+.ecg{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;flex:none}
+.ecg svg{width:84px;height:24px}
+.ecg path{fill:none;stroke:#3ecf6a;stroke-width:1.6;stroke-dasharray:140;animation:ecg 1.4s linear infinite;opacity:.8}
+.ecg b{color:#3ecf6a;font-weight:400;opacity:.85}
+.ecg.danger path{stroke:var(--red);animation-duration:.55s;filter:drop-shadow(0 0 3px var(--red))}
+.ecg.danger b{color:var(--red)}
+@keyframes ecg{from{stroke-dashoffset:140}to{stroke-dashoffset:0}}
+.snd{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;background:none;border:1px solid var(--line);color:var(--muted);padding:6px 10px;cursor:pointer;flex:none}
+.snd[aria-pressed="true"]{color:#f1ede6;border-color:var(--red);box-shadow:0 0 10px rgba(196,18,31,.35)}
+@media (max-width:860px){.nav .wrap{gap:10px}.ecg{order:2}.snd{order:3;padding:6px 8px}.burger{order:4;margin-left:0}.brand{margin-right:auto}.tabs{order:5}}
+@media (max-width:520px){.ecg b{display:none}.ecg svg{width:44px}.brand{font-size:13px}.snd .long{display:none}}
+
+/* ===== главный экран ===== */
+.hero{background:none;margin-inline:calc(50% - 50vw)!important;padding-inline:max(16px,calc(50vw - 560px))!important}
+.hero-bg{background-position:60% 40%!important}
+.home-bg{position:absolute;z-index:-1;left:calc(50% - 50vw);width:100vw;top:0;bottom:-72px;background-size:cover;background-position:center 30%;filter:grayscale(.75) contrast(1.15) brightness(.5);-webkit-mask-image:linear-gradient(transparent,#000 18%,#000 80%,transparent);mask-image:linear-gradient(transparent,#000 18%,#000 80%,transparent)}
+.home-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(80,0,8,.35),rgba(7,7,9,.55) 45%,rgba(20,45,120,.4))}
+.home-low{position:relative;isolation:isolate;padding-bottom:20px}
+.hero-bg{filter:grayscale(.7) contrast(1.15) brightness(.85)!important}
+.hero h1{color:#e9e5de}
+.hero h1 span{color:#efe9e1;text-shadow:0 0 1px #fff,var(--glow-r);animation:flicker 7s infinite}
+@keyframes flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.4;text-shadow:none}}
+.neons{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+.neon{font-family:var(--f-display);font-size:clamp(14px,2vw,20px);letter-spacing:.2em;padding:5px 13px;border-radius:5px;border:2px solid currentColor}
+.neon.r{color:#e8323f;text-shadow:var(--glow-r);box-shadow:var(--glow-r),inset 0 0 10px rgba(196,18,31,.4);animation:buzz 3.8s infinite}
+/* «мёртвая» синяя вывеска: почти не горит, изредка вспыхивает */
+.neon.b{color:#3a3d46;border-color:#2c2f37;animation:dead 9s 2s infinite}
+@keyframes buzz{0%,7%,9%,40%,42%,100%{opacity:1}8%,41%{opacity:.15}}
+@keyframes dead{0%,40%,43%,70%,73%,76%,100%{color:#3a3d46;border-color:#2c2f37;text-shadow:none;box-shadow:none}41.5%,71%,74.5%{color:#8fb0ff;border-color:#8fb0ff;text-shadow:0 0 6px #3a5aa8,0 0 18px #3a5aa8;box-shadow:0 0 14px rgba(58,90,168,.6)}}
+.flash{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle 300px at var(--fx,70%) var(--fy,40%),rgba(255,240,210,.05) 0,transparent 35%,rgba(2,2,3,.45) 62%,rgba(2,2,3,.8) 100%)}
+.hero .wrap{z-index:2}
+.btn-main{background:#1a0a0c;border-color:var(--red);color:#f1ede6;box-shadow:inset 0 0 0 1px rgba(196,18,31,.3),0 0 14px rgba(196,18,31,.25)}
+.btn-main:hover{background:#2a0c10;box-shadow:inset 0 0 0 1px rgba(196,18,31,.5),0 0 22px rgba(196,18,31,.45)}
+.btn-ghost{color:var(--ink);border-color:#3a383f}
+.btn-ghost:hover{border-color:var(--red);background:rgba(196,18,31,.08)}
+.counter b{color:#e9e5de;text-shadow:0 0 14px rgba(74,125,255,.55)}
+.stamp{cursor:pointer}
+
+/* полицейская лента — грязная, выцветшая */
+.tape{position:relative;z-index:3;margin-inline:calc(50% - 50vw);overflow:hidden;background:repeating-linear-gradient(-45deg,#b89a16 0 22px,#a88b10 22px 44px);color:#111;font-family:var(--f-display);font-size:14px;letter-spacing:.12em;padding:6px 0;transform:rotate(-1.6deg);box-shadow:0 8px 30px rgba(0,0,0,.8);border-block:2px solid #0b0b0b;filter:saturate(.75) brightness(.8)}
+.tape::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(60,0,0,.35),transparent 30%),radial-gradient(ellipse at 75% 40%,rgba(0,0,0,.35),transparent 25%);pointer-events:none}
+.tape.b2{transform:rotate(1.2deg);margin-block:-6px 26px}
+.tape div{display:inline-block;white-space:nowrap;animation:tape 50s linear infinite}
+.tape.b2 div{animation-direction:reverse}
+@keyframes tape{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== шапки разделов с фото ===== */
+.view{position:relative;isolation:isolate}
+.mood{position:absolute;z-index:-1;top:0;left:calc(50% - 50vw);width:100vw;height:440px;background-size:cover;background-position:center 40%;filter:grayscale(.85) contrast(1.2) brightness(.55);-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent)}
+.mood::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,8,.85),rgba(7,7,8,.3) 50%,rgba(20,45,120,.38)),linear-gradient(rgba(70,0,8,.25),transparent 60%)}
+.vhead{padding-top:40px}
+.vhead h2{color:#efe9e1;text-shadow:0 2px 18px rgba(0,0,0,.9)}
+.vhead .label{color:#d0303c}
+.vhead p{color:#bdb8b0}
+
+/* ===== карточки и окна ===== */
+.folder,.card,.vbtn,.face,.sheet,.slide .stx,.spec,.factrow div,.fact{background:#0e0e10}
+.folder,.card,.vbtn,.face{box-shadow:0 0 18px rgba(74,125,255,.07),inset 0 0 0 1px rgba(255,255,255,.015)}
+.folder:hover,.card:hover,.game:hover .cover,.film:hover .frame,.flip:hover .face.front{border-color:rgba(196,18,31,.75);box-shadow:-10px 0 30px rgba(196,18,31,.28),10px 0 34px rgba(74,125,255,.28),0 0 0 1px rgba(196,18,31,.35)}
+.vbtn[aria-selected="true"]{border-color:#4a7dff;box-shadow:0 0 18px rgba(74,125,255,.35)}
+.folder::before{background:linear-gradient(90deg,rgba(196,18,31,.6),rgba(74,125,255,.6))}
+.folder:hover::before{background:var(--red)}
+.folder .go{color:#c9c3b8}
+.chip[aria-pressed="true"]{background:#2a0c10;border-color:var(--red);color:#f1ede6}
+.sheet{border-color:#2a292e;box-shadow:0 30px 90px rgba(0,0,0,.9),0 0 0 1px rgba(196,18,31,.12)}
+.stabs button[aria-selected="true"]{border-bottom-color:var(--red);color:#f1ede6}
+.tl::after{background:linear-gradient(#3a383f,var(--red))}
+.ev.key::before{box-shadow:0 0 10px rgba(196,18,31,.7)}
+.ev .yr,.timeline .yr{color:#b9a988}
+.fact{position:relative;overflow:hidden;border:1px solid #2a1416}
+.fact::before{content:"";position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18;filter:grayscale(1);z-index:0}
+.fact>*{position:relative}
+footer{border-top:1px solid #1d1c20}
+
+.jump{position:fixed;inset:0;z-index:90;background:#000 center/cover no-repeat;filter:grayscale(1) contrast(1.5);animation:jump .7s steps(3) forwards;pointer-events:none}
+@keyframes jump{0%{opacity:1;transform:scale(1.15)}60%{opacity:1;transform:scale(1)}100%{opacity:0}}
+
+@media (prefers-reduced-motion:reduce){.grain,.scan::after,.tape div,.neon,.hero h1 span{animation:none!important}}
+
+/* ===== правки: больше синего, отсвет карточек, грязь и кровь ===== */
+:root{--blue:#3d7bff}
+body{background:radial-gradient(70vw 60vh at 100% 100%,rgba(30,60,170,.22),transparent 70%),radial-gradient(60vw 50vh at 0% 0%,rgba(110,0,12,.18),transparent 70%),radial-gradient(120vw 80vh at 50% -10%,#121218,transparent 60%),#070708;background-attachment:fixed}
+.grime{position:fixed;inset:0;pointer-events:none;z-index:2;background-size:cover;opacity:.55}
+.hero-bg{filter:grayscale(.35) contrast(1.15) brightness(.95)!important}
+.mood::after{background:linear-gradient(90deg,rgba(7,7,8,.85),rgba(7,7,8,.35) 50%,rgba(20,45,140,.38))}
+.counter b{text-shadow:0 0 14px rgba(61,123,255,.55)}
+.btn-ghost{border-color:rgba(61,123,255,.6);color:#c9d6ff;box-shadow:inset 0 0 10px rgba(61,123,255,.15)}
+.btn-ghost:hover{border-color:var(--blue);background:rgba(61,123,255,.1)}
+.folder .go{color:#8fb0ff}
+.tabs button::after{background:linear-gradient(90deg,var(--red),var(--blue))}
+.nav{box-shadow:0 1px 0 rgba(196,18,31,.4),0 2px 0 rgba(61,123,255,.18)}
+.card .r,.face .tag,.film .fy .canon{color:#7fa4ff}
+.folder,.card,.game .cover,.film .frame,.flip .face,.vbtn,.slide{box-shadow:0 0 0 1px rgba(255,255,255,.02),0 8px 30px rgba(0,0,0,.5),0 0 18px rgba(61,123,255,.08)}
+.folder:hover,.card:hover,.game:hover .cover,.film:hover .frame,.flip:hover .face{border-color:rgba(196,18,31,.75);box-shadow:0 0 0 1px rgba(196,18,31,.35),0 0 26px rgba(196,18,31,.28),0 0 60px rgba(61,123,255,.18)}
+.folder,.card{position:relative;overflow:hidden}
+.folder::after,.card::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.07) 45%,transparent 55%);background-size:250% 100%;background-position:120% 0;transition:background-position .9s var(--ease)}
+.folder:hover::after,.card:hover::after{background-position:-40% 0}
+.note{--paper:#d8ccaf;background-color:var(--paper);background-image:var(--stain,none),linear-gradient(170deg,rgba(255,255,255,.2),rgba(80,60,30,.18));background-size:cover;background-blend-mode:multiply;box-shadow:0 14px 30px -12px #000,inset 0 0 40px rgba(70,45,20,.35)}
+.note::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 100% 0%,rgba(60,35,10,.35),transparent 40%),radial-gradient(ellipse at 0% 100%,rgba(40,25,10,.3),transparent 45%)}
+.fact{background-color:#0e0e10;background-image:var(--fstain,none);background-size:cover}
