@@ -211,12 +211,17 @@ $('#sideChips').innerHTML=[['all','Все'],['hero','Герои'],['grey','Дв�
 $('#sideChips').addEventListener('click',e=>{const b=e.target.closest('[data-side]');if(!b)return;side=b.dataset.side;$$('#sideChips .chip').forEach(c=>c.setAttribute('aria-pressed',c===b));renderPeople()});
 function renderPeople(){
   const el=$('#people');
-  el.innerHTML=PEOPLE.filter(p=>side==='all'||p.side===side).map(p=>`<button class="card${p.featured?' featured':''}" data-person="${p.id}" aria-label="Открыть дело: ${esc(p.name)}">
+  const q=($('#pSearch')?$('#pSearch').value:'').trim().toLowerCase();
+  const hay=p=>[p.name,p.role,p.short,...p.facts.flat(),...p.bio.flat(),...p.games.map(g=>GAME[g].title)].join(' ').toLowerCase();
+  const list=PEOPLE.filter(p=>(side==='all'||p.side===side)&&(!q||hay(p).includes(q)));
+  $('#pCount').textContent=q?`Найдено дел: ${list.length}`:'';$('#pEmpty').hidden=list.length>0;
+  el.innerHTML=list.map(p=>`<button class="card${p.featured?' featured':''}" data-person="${p.id}" aria-label="Открыть дело: ${esc(p.name)}">
     <div class="photo">${PHOTOS[p.id]?`<img src="${IMG[PHOTOS[p.id].main]}" alt="${esc(p.name)}" loading="lazy">`:`<canvas width="${p.featured?640:400}" height="${p.featured?480:300}" data-print="${p.id}"></canvas><span class="redact">ФОТО НЕТ</span><span class="initials">${p.ini}</span>`}</div>
     <div class="txt"><span class="r">${p.role}</span><h3>${p.name}</h3><p class="p">${p.short}</p></div></button>`).join('');
   el.querySelectorAll('canvas[data-print]').forEach(c=>{const p=PERSON[c.dataset.print];drawPrint(c,p.seed,p.side==='villain'?5:p.side==='grey'?300:40)});
   el.classList.remove('stagger');void el.offsetWidth;el.classList.add('stagger');stag(el);
-}
+}let pT;$('#pSearch').addEventListener('input',()=>{clearTimeout(pT);pT=setTimeout(renderPeople,120)});
+
 renderPeople();
 function openPerson(id){
   const p=PERSON[id];if(!p||!p.bio)return;
