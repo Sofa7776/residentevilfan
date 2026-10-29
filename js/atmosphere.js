@@ -17,7 +17,7 @@ function grimeTex(w,h,seed,o){const c=document.createElement('canvas');c.width=w
 (function(){
   const reduceM=matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* фото в шапках разделов */
-  const MAP={timeline:'m_tape',games:'m_pins',people:'m_missing',films:'m_tv',viruses:'m_steps',places:'m_flash',orgs:'m_spider'};
+  const MAP={timeline:'m_tape',games:'m_pins',people:'m_missing',films:'m_tv',viruses:'m_steps',places:'m_flash',orgs:'m_spider',favs:'m_hands'};
   document.querySelectorAll('.view').forEach(v=>{const k=MAP[v.dataset.view];if(!k)return;const d=document.createElement('div');d.className='mood';d.setAttribute('aria-hidden','true');d.style.backgroundImage=`url(${MOOD[k]})`;v.prepend(d)});
   document.getElementById('homeBg').style.backgroundImage=`url(${MOOD.m_tape})`;
   const fs=document.createElement('style');fs.textContent=`.fact::before{background-image:url(${MOOD.m_paper})}`;document.head.appendChild(fs);

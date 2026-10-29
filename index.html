@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;500;600&family=PT+Mono&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/atmosphere.css">
+<link rel="stylesheet" href="css/favs.css">
 </head>
 <body>
 <div class="siren" aria-hidden="true"></div><div class="vign" aria-hidden="true"></div><div class="grime" id="grime" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
@@ -32,6 +33,7 @@
       <li><button data-go="viruses">Вирусы</button></li>
       <li><button data-go="places">Места</button></li>
       <li><button data-go="orgs">Организации</button></li>
+      <li><button data-go="favs">Любимчики</button></li>
     </ul>
   </div>
 </nav>
@@ -164,11 +166,21 @@
   <div class="orgs stagger" id="orgs"></div>
 </section>
 
+<!-- ЛЮБИМЧИКИ ФАНДОМА -->
+<section class="view" id="v-favs" data-view="favs" hidden>
+  <div class="vhead">
+    <span class="label">Папка 08 · Любимчики фандома</span>
+    <h2>Их обожают и боятся</h2>
+    <p>Персонажи, о которых фанаты спорят, рисуют арты и придумывают мемы. Нажмите на снимок, чтобы открыть то, чего нет в остальных досье.</p>
+  </div>
+  <div class="favs stagger" id="favs"></div>
+</section>
+
 </main>
 
 <div class="wrap"><footer>
   <span>Фанатский учебный сайт. Resident Evil — товарный знак Capcom. Скриншоты и официальные изображения © Capcom, фанатские работы подписаны именами авторов. Тексты и рисованные иллюстрации созданы для этой страницы.</span>
-  <span>ГУАП · Информатика · ЛР №4</span>
+  <span>ГУАП · Информатика · ЛР №4–5</span>
 </footer></div>
 
 <div class="lightbox" id="lightbox" hidden><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></div>
@@ -182,6 +194,7 @@
 <script src="js/data.js"></script>
 <script src="js/story.js"></script>
 <script src="js/main.js"></script>
+<script src="js/favs.js"></script>
 <script src="js/atmosphere.js"></script>
 </body>
 </html>
