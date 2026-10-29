@@ -1,3 +1,7 @@
+/* Шрифты лежат в папке fonts — сайт не зависит от внешних сервисов */
+@font-face{font-family:"Russo One";src:url("../fonts/RussoOne.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../fonts/IBMPlexSans.woff") format("woff");font-weight:400 600;font-display:swap}
+@font-face{font-family:"PT Mono";src:url("../fonts/PTMono.woff") format("woff");font-weight:400;font-display:swap}
 /* Layout: архив-досье лаборатории. Экраны-«папки» переключаются вкладками, детали открываются в карточках и делах */
 :root{
   --bg:#0e1211; --panel:#151a19; --panel-2:#1c2321; --line:#2b3431;

@@ -6,8 +6,7 @@
 <meta name="description" content="Фанатское досье по лору Resident Evil: хронология, части серии, персонажи, фильмы, вирусы, места и организации.">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <title>Досье Resident Evil</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;500;600&family=PT+Mono&display=swap">
+<link rel="preload" href="fonts/IBMPlexSans.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/atmosphere.css">
 <link rel="stylesheet" href="css/favs.css">
@@ -108,7 +107,12 @@
     <h2>Персонажи</h2>
     <p>Нажмите на карточку, чтобы открыть биографию и фото из архива. У кого фото нет, в деле остался отпечаток пальца.</p>
   </div>
+  <div class="search">
+    <label for="pSearch" class="label">Поиск по архиву</label>
+    <div class="search-row"><input id="pSearch" type="search" placeholder="Имя, роль, год или событие: например, «Раккун» или «2004»" autocomplete="off"><span id="pCount" class="search-count"></span></div>
+  </div>
   <div class="chips" id="sideChips" role="group" aria-label="Сторона"></div>
+  <p class="search-empty" id="pEmpty" hidden>В архиве нет дел по этому запросу. Попробуйте другое слово.</p>
   <div class="people stagger" id="people"></div>
 </section>
 
