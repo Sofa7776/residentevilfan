@@ -1,5 +1,9 @@
 /* Пути к изображениям сайта (файлы лежат в папке images) */
 const IMG={
+ "merchant": "images/merchant.jpg",
+ "hunk": "images/hunk.jpg",
+ "tofu": "images/tofu.jpg",
+ "jill_sandwich": "images/jill_sandwich.jpg",
  "p_leon": "images/p_leon.jpg",
  "p_leon04": "images/p_leon04.jpg",
  "p_leon98": "images/p_leon98.jpg",
