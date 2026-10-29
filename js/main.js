@@ -17,7 +17,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden){lb.hidden=true;e
 /* =====================================================================
    НАВИГАЦИЯ МЕЖДУ ЭКРАНАМИ
    ===================================================================== */
-const VIEWS=['home','timeline','games','people','films','viruses','places','orgs'];
+const VIEWS=['home','timeline','games','people','films','viruses','places','orgs','favs'];
 const nav=$('.nav'), burger=$('#burger');
 let current=null;
 function go(v,push=true){
@@ -26,6 +26,7 @@ function go(v,push=true){
   $$('.view').forEach(s=>{const on=s.dataset.view===v;s.hidden=!on;s.classList.toggle('enter',on)});
   $$('.tabs button').forEach(b=>{if(b.dataset.go===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   current=v;
+  const tb=document.querySelector(`.tabs button[data-go="${v}"]`);document.title=v==='home'?'Досье Resident Evil':`${tb?tb.textContent:''} · Досье Resident Evil`;
   nav.classList.remove('open');burger.setAttribute('aria-expanded','false');
   if(push){try{history.replaceState(null,'','#'+v)}catch(e){}}
   window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
@@ -39,7 +40,7 @@ addEventListener('hashchange',()=>go(location.hash.slice(1),false));
 /* =====================================================================
    ГЛАВНАЯ
    ===================================================================== */
-const FOLDERS=[['timeline','01','Хронология','21 событие от 1950-х до 2026 года'],['games','02','Части серии','13 дел: что раскрыла каждая игра'],['people','03','Персонажи','12 личных дел, подробнее всех — Леон'],['films','04','Фильмы','14 экранизаций: канон и кино'],['viruses','05','Вирусы','7 образцов под живым микроскопом'],['places','06','Места','7 мест катастроф в карусели'],['orgs','07','Организации','8 сил — от «Амбреллы» до «Связей»']];
+const FOLDERS=[['timeline','01','Хронология','21 событие от 1950-х до 2026 года'],['games','02','Части серии','13 дел: что раскрыла каждая игра'],['people','03','Персонажи','12 личных дел, подробнее всех — Леон'],['films','04','Фильмы','14 экранизаций: канон и кино'],['viruses','05','Вирусы','7 образцов под живым микроскопом'],['places','06','Места','7 мест катастроф в карусели'],['orgs','07','Организации','8 сил — от «Амбреллы» до «Связей»'],['favs','08','Любимчики','8 героев и монстров, которых обожает фандом']];
 $('#folders').innerHTML=FOLDERS.map(([v,n,t,p])=>`<button class="folder" data-go="${v}"><span class="num">ПАПКА ${n}</span><h3>${t}</h3><p>${p}</p><span class="go">Открыть →</span></button>`).join('');
 $('#folders').classList.add('stagger');stag($('#folders'));
 
