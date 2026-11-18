@@ -24,3 +24,5 @@ images/             — все изображения сайта в формат
 ```
 
 Resident Evil — товарный знак Capcom. Скриншоты и официальные изображения принадлежат Capcom, фанатские работы подписаны именами авторов.
+
+![Deploy](https://github.com/Sofa7776/residentevilfan/actions/workflows/deploy.yml/badge.svg)
