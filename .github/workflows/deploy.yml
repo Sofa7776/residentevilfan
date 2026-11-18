@@ -1,0 +1,50 @@
+# Workflow автоматической публикации сайта на GitHub Pages.
+# Размещается в репозитории по пути: .github/workflows/deploy.yml
+
+name: Deploy static site   # название workflow (видно на вкладке Actions)
+
+# Триггер: запуск при каждом push в ветку main (и вручную кнопкой)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Права, необходимые для публикации на GitHub Pages
+permissions:
+  contents: read    # чтение файлов репозитория
+  pages: write      # разрешение на публикацию в Pages
+  id-token: write   # OIDC-токен для подтверждения деплоя
+
+jobs:
+  # Задание 1 (индивидуальный проект): проверка HTML-разметки перед публикацией
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check HTML with HTMLHint
+        run: npx --yes htmlhint "**/*.html"
+
+  # Задание 2: публикация сайта (запускается только после успешной проверки)
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
